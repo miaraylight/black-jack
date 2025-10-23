@@ -7,46 +7,55 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Let's play!");
 
-        ArrayList<Hand> players = collectPlayers();
+        ArrayList<Hand> hands = getHands();
 
         Deck deck = new Deck();
         deck.shuffle();
 
         // deal 2 cards to each hand
         for (int i = 0; i < 2; i++) {
-            for (Hand player: players){
+            for (Hand hand: hands){
                 // get a card from the deck
                 Card card = deck.deal();
                 // deal that card to the hand
-                player.deal(card);
+                hand.deal(card);
             }
         }
 
 
-        for (Hand player: players) {
-            String name = player.getName();
-            int handValue = player.getValue();
+        for (Hand hand: hands) {
+            String name = hand.getName();
+            int handValue = hand.getValue();
             String info = String.format("%s hand is worth %d",name, handValue);
             System.out.println(info);
         }
 
-        Hand winner = null;
+        Hand winningHand = null;
         int bestValue = 0;
+//
+//        for (int i = 0; i < hands.size(); i++) {
+//            int playerValue = hands.get(i).getValue();
+//
+//            // Only consider hands with value <= 21
+//            if (playerValue <= 21 && playerValue > bestValue) {
+//                bestValue = playerValue;
+//                winningHand = hands.get(i);
+//            }
+//        }
 
-        for (int i = 0; i < players.size(); i++) {
-            int playerValue = players.get(i).getValue();
+        for (Hand hand: hands) {
+            int handValue = hand.getValue();
 
-            // Only consider players with value <= 21
-            if (playerValue <= 21 && playerValue > bestValue) {
-                bestValue = playerValue;
-                winner = players.get(i);
+            if (handValue <= 21 && handValue > bestValue) {
+                bestValue = handValue;
+                winningHand = hand;
             }
         }
 
-        System.out.println("Winner is: " + winner.getName() + " with hand: " + winner.getValue());
+        System.out.println("Winner is: " + winningHand.getName() + " with hand: " + winningHand.getValue());
     }
 
-    public static ArrayList<Hand> collectPlayers() {
+    public static ArrayList<Hand> getHands() {
         int numberOfPlayers = Integer.parseInt(input("Please enter number of players: "));
         ArrayList<Hand> hands = new ArrayList<>();
 
