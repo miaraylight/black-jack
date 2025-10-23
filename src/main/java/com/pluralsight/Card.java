@@ -14,9 +14,9 @@ public class Card {
     public String getSuit() {
         // only return the suit if the card is face up
         if (isFaceUp) {
-            return "suit";
+            return suit;
         } else {
-            return "#";
+            return "X";
         }
     }
 
@@ -27,20 +27,29 @@ public class Card {
             // i.e. A, K, Q, J, 10, 9 ...
             return value;
         } else {
-            return "#";
+            return "X";
         }
     }
 
     public int getPointValue() {
+        int points = 0;
         // only return the value if the card is face up
         if (isFaceUp) {
-            // determine point value and return it
-            // A = 11
-            // K, Q, J = 10
-            // all numeric cards are equal to their face value
+
+            if (value.equals("A")) {
+                points = 11;
+            } else if (value.equals("K") || value.equals("Q") || value.equals("J")) {
+                points = 10;
+            } else {
+                points = Integer.parseInt(value);
+            }
+
         } else {
-            return 1;
+            System.out.println("Face down");
         }
+
+        return points;
+
     }
 
     public boolean isFaceUp() {
